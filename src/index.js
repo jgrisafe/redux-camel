@@ -4,12 +4,14 @@ const defaultOptions = { global: true };
 
 const checkCamelCaseKey = (action) => {
   if (typeof action === 'object') {
-    return !!action.camelCase || !!action.meta.arg.camelCase
+    return (!!action.camelCase || !!action.meta.arg.camelCase || options.global)
+      && action.camelCase !== false
   }
 }
 
 const camelMiddleware = (options = defaultOptions) => store => next => action => {
-  const shouldCamelCaseKeys = options.global || checkCamelCaseKey(action);
+  const shouldCamelCaseKeys =  checkCamelCaseKey(action);
+
   if (typeof action === 'object' && shouldCamelCaseKeys) {
     const newAction = camelcaseKeys(action);
     return next(newAction);
