@@ -4,7 +4,7 @@ const defaultOptions = { global: true };
 
 const checkCamelCaseKey = (action) => {
   if (typeof action === 'object') {
-    return (!!action.camelCase || !!action.meta.arg.camelCase || options.global)
+    return (options.global || !!action.camelCase || !!action.meta.arg.camelCase)
       && action.camelCase !== false
   }
 }
